@@ -35,7 +35,9 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => over
+
+        assertEquals("over", sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +45,12 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? =>　mysmys
+
+        assertEquals("mysmys", sea);
+
+        //replaceメソッド：対象の文字を書き換える。
+        //スコープ外で定義したseaは別物。
     }
 
     private String functionSomething(String name) {
@@ -73,16 +80,21 @@ public class Step04MethodTest extends PlainTestCase {
         int sea = 904;
         boolean land = false;
         helloMutable(sea - 4, land, mutable);
+        log(sea);
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
+
+        //インクリメントした値は変数に代入していないので、901はリターンされるけど使ってない。
+        assertEquals(910, sea);
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
         sea++;
         land = true;
         piari.setStageName("mystic");
+        log(sea);
         return sea;
     }
 
@@ -109,13 +121,16 @@ public class Step04MethodTest extends PlainTestCase {
     public void test_method_instanceVariable() {
         hasAnnualPassport = true;
         int sea = inParkCount;
+        log(sea);
         offAnnualPassport(hasAnnualPassport);
         for (int i = 0; i < 100; i++) {
             goToPark();
         }
         ++sea;
         sea = inParkCount;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 100
+
+        assertEquals(100, sea);
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
@@ -150,14 +165,39 @@ public class Step04MethodTest extends PlainTestCase {
      * o showSea(): 一つのString引数、戻り値なし、引数をlog()で表示する
      * </pre>
      */
+
+    private boolean availableLogging = true;
     public void test_method_making() {
-        // comment out after making these methods
-        //String replaced = replaceCtoB(replaceAtoB("ABC"));
-        //String sea = addPrefix("broadway", replaced);
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+//         comment out after making these methods
+        String replaced = replaceCtoB(replaceAtoB("ABC"));
+        String sea = addPrefix("broadway", replaced);
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
 
     // write methods here
+    private String replaceAtoB(String strAB) {
+        strAB = strAB.replace("A", "B");
+        return strAB;
+    }
+
+    private String replaceCtoB(String strCB) {
+        strCB = strCB.replace("C", "B");
+        return strCB;
+    }
+
+    private String addPrefix(String sea, String rep) {
+        String prefix = sea.concat(":").concat(rep);
+        return prefix;
+    }
+
+    private boolean isAvailableLogging(){
+        availableLogging = true;
+        return availableLogging;
+    }
+
+    private void showSea(String sea){
+        log(sea);
+    }
 }
