@@ -15,6 +15,9 @@
  */
 package org.docksidestage.javatry.basic;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +71,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log("...Executing lambda expression style callback");
         helpCallbackConsumer(stage -> log(stage + ": " + title));
 
-        // your answer? => 
+        // your answer? => yes
 
         // cannot reassign because it is used at callback process
         //title = "wave";
@@ -84,7 +87,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             log(stage);
         });
         log("lost river");
-        // your answer? => 
+        // your answer? => harbor,broadway,dockside,hangar,lost river
     }
 
     private class St8BasicConsumer implements Consumer<String> {
@@ -116,7 +119,10 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         String sea = helpCallbackFunction(number -> {
             return label + ": " + number;
         });
-        log(sea); // your answer? => 
+        log(sea); // your answer? =>
+
+        assertEquals("number: 7",sea);
+        assertThat("number: 7", is(sea));
     }
 
     private String helpCallbackFunction(Function<Integer, String> oneArgLambda) {
@@ -176,7 +182,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             St8Member member = optMember.get();
             log(member.getMemberId(), member.getMemberName());
         }
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -192,7 +198,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -235,12 +241,18 @@ public class Step08Java8FunctionTest extends PlainTestCase {
 
         Integer amba = facade.selectMember(2).flatMap(mb -> mb.getWithdrawal()).map(wdl -> wdl.getWithdrawalId()).orElse(-1);
 
-        log(sea); // your answer? => 
-        log(land); // your answer? => 
-        log(piari); // your answer? => 
-        log(bonvo); // your answer? => 
-        log(dstore); // your answer? => 
-        log(amba); // your answer? => 
+        log(sea); // your answer? =>
+        assertEquals("music",sea);
+        log(land); // your answer? =>
+        assertEquals("music",land);
+        log(piari); // your answer? =>
+        assertEquals("music",piari);
+        log(bonvo); // your answer? =>
+        assertEquals("*no reason",bonvo);
+        log(dstore); // your answer? =>
+        assertEquals("*no reason",dstore);
+        log(amba); // your answer? =>
+        assertEquals(12,amba);
     }
 
     /**
@@ -259,7 +271,8 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         } catch (IllegalStateException e) {
             sea = e.getMessage();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wave
+        assertEquals("wave",sea);
     }
 
     // ===================================================================================
@@ -278,14 +291,20 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             }
         }
         String sea = oldfilteredNameList.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => broadway
+
+        assertEquals("[broadway, dockside]",sea);
+
+
 
         List<String> filteredNameList = memberList.stream() //
                 .filter(mb -> mb.getWithdrawal().isPresent()) //
                 .map(mb -> mb.getMemberName()) //
                 .collect(Collectors.toList());
         String land = filteredNameList.toString();
-        log(land); // your answer? => 
+        log(land); // your answer? =>
+
+        assertEquals("[broadway, dockside]",sea);
     }
 
     /**
@@ -301,7 +320,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
                 .mapToInt(pur -> pur.getPurchasePrice())
                 .distinct()
                 .sum();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 600
+
+        assertEquals(600,sea);
     }
 
     // *Stream API will return at Step12 again, it's worth the wait!

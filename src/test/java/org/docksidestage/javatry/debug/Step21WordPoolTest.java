@@ -71,7 +71,6 @@ public class Step21WordPoolTest extends PlainTestCase {
             // assert
             assertEquals(i + 1, actual.intValue());
         }
-
     }
 
     public void test_update() {

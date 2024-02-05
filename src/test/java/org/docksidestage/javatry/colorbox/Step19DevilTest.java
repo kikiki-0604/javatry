@@ -15,6 +15,15 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.size.BoxSize;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -42,8 +51,14 @@ public class Step19DevilTest extends PlainTestCase {
      *  Next find a colorbox(C) that the list in the space contains a number that 2nd decimal place is same as tens place of depth of color-box B,
      *  Next find a colorbox(D) that length of name is same as 1st place number of BigDecimal value found in the colorbox C,
      *  At last, the question is what is in the lowest space of colorbox D?
+     *
+     *  1,カラーボックスを取得する
+     *  2,色の名前取得する
+     *  ３、３文字目
+     *
      */
     public void test_too_long() {
+
     }
 
     // ===================================================================================
@@ -54,6 +69,23 @@ public class Step19DevilTest extends PlainTestCase {
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
     public void test_looks_like_easy() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        List<String> result = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("red"))
+                .map(redBox -> {
+                    try {
+                        Field height = BoxSize.class.getDeclaredField("height");
+                        height.setAccessible(true);
+
+                        height.setInt(redBox.getSize(), 160);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    return String.valueOf(redBox.getSize().getHeight());
+                }).collect(Collectors.toList());
+        log(result);
     }
 
     // ===================================================================================
@@ -64,5 +96,15 @@ public class Step19DevilTest extends PlainTestCase {
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースの引数なしのFunctionalメソッドの戻り値は？)
      */
     public void test_be_frameworker() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        List<String> result = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(content -> content instanceof YourPrivateRoom.FavoriteProvider)
+                .map(content -> ((YourPrivateRoom.FavoriteProvider) content).justHere())
+                .collect(Collectors.toList());
+
+        log(result);
     }
 }

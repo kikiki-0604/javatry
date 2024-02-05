@@ -183,14 +183,15 @@ public class YourPrivateRoom {
         StandardColorBox colorBox = new StandardColorBox(new BoxColor("yellow"), new BoxSize(30, 50, 40));
         Set<String> set = new HashSet<String>();
         set.add("2019/04/22");
-        set.add("2O19/04/22"); // super trap
+        set.add("2O20/04/22"); // Hyper trap
         colorBox.getUpperSpace().setContent(set);
         colorBox.getMiddleSpace().setContent(new BittersweetMemorableException("nullsidestage", doyoulikeNullPointer()));
         colorBox.getLowerSpace().setContent((FavoriteProvider) () -> "mystic");
         return colorBox;
     }
 
-    private NullPointerException doyoulikeNullPointer() {
+    private NullPointerException
+    doyoulikeNullPointer() {
         return new NullPointerException("Oh, yes");
     }
 
@@ -361,8 +362,8 @@ public class YourPrivateRoom {
     //                                                                           =========
     public static class BoxedResort {
 
-        private final String region; // not null
-        private BoxedPark park; // null allowed
+        private final String region;
+        private BoxedPark park;
 
         public BoxedResort(String region, BoxedPark park) {
             this.region = region;
@@ -385,8 +386,8 @@ public class YourPrivateRoom {
 
     public static class BoxedPark {
 
-        private final String theme; // not null
-        private BoxedStage stage; // null allowed
+        private final String theme;
+        private BoxedStage stage;
 
         public BoxedPark(String theme, BoxedStage stage) {
             this.theme = theme;
@@ -409,8 +410,8 @@ public class YourPrivateRoom {
 
     public static class BoxedStage {
 
-        private final String showName; // not null
-        private String keyword; // null allowed
+        private final String showName;
+        private String keyword;
 
         public BoxedStage(String showName, String keyword) {
             this.showName = showName;

@@ -15,7 +15,7 @@ public class WordPool {
         wordMap.put(1L, new Word(getJapanese(languagePool), "私"));
         wordMap.put(2L, new Word(getJapanese(languagePool), "柿"));
         wordMap.put(3L, new Word(getJapanese(languagePool), "荼"));
-        wordMap.put(4L, new Word(getJapanese(languagePool), "昴"));
+        wordMap.put(4L, new Word(getJapanese(languagePool), "昂"));
     }
 
     public Map.Entry<Long, Word> create(Language language, String word) {
@@ -38,7 +38,7 @@ public class WordPool {
     }
 
     public Word find(Long id) {
-        return wordMap.remove(id);
+        return wordMap.get(id);
     }
 
     public Word update(Long id, Word word) {

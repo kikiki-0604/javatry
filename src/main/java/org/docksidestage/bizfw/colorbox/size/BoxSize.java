@@ -38,7 +38,7 @@ public class BoxSize {
 
     // ===================================================================================
     //                                                                      Basic Override
-    //                                                                      ==============
+    //                                                                  ==============
     @Override
     public String toString() {
         return "size:{" + height + ", " + width + ", " + depth + "}";

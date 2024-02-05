@@ -17,6 +17,7 @@ package org.docksidestage.javatry.basic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.animation.ScaleTransition;
 import org.docksidestage.unit.PlainTestCase;
@@ -187,7 +188,21 @@ public class Step02IfForTest extends PlainTestCase {
         }
         log(resultList);
 
-        //TODO:assertでリストの各要素があっているかを確認する方法がある？
+        for(String result : resultList){
+            assertTrue(result.contains("a"));
+        }
+
+//        List<String> checkList = stateList.stream()
+//                .filter(state -> state.contains("a"))
+//                .collect(Collectors.toList());
+//
+//        log(checkList);
+//
+//        assertEquals(resultList,checkList);
+
+
+
+        //TODO:assertでリストの各要素があっているかを確認する方法がある？StreamAPIでいけそう？filter?
     }
 
     // ===================================================================================

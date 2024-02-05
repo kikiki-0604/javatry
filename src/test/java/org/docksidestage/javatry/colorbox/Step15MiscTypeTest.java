@@ -15,6 +15,15 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -33,6 +42,16 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているthrowできるオブジェクトのクラス名は？)
      */
     public void test_throwable() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        List<Object> result = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(boxContent -> boxContent instanceof Throwable)
+                .map(throwable -> throwable.getClass().getName())
+                .collect(Collectors.toList());
+
+        log(result);
     }
 
     /**
@@ -40,6 +59,16 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っている例外オブジェクトのネストした例外インスタンスのメッセージは？)
      */
     public void test_nestedException() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+        List<Object> result = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(boxContent -> boxContent instanceof Throwable)
+                .map(exception -> ((Throwable) exception).getCause().getMessage())
+                .collect(Collectors.toList());
+
+        log(result);
     }
 
     // ===================================================================================
@@ -50,6 +79,13 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているFavoriteProviderインターフェースのjustHere()メソッドの戻り値は？)
      */
     public void test_interfaceCall() {
+        YourPrivateRoom.FavoriteProvider favoriteProvider = new YourPrivateRoom.FavoriteProvider() {
+            @Override
+            public String justHere() {
+                return null;
+            }
+        };
+
     }
 
     // ===================================================================================
@@ -60,6 +96,21 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (beigeのカラーボックスに入っているListの中のBoxedResortのBoxedStageのkeywordは？(値がなければ固定の"none"という値を))
      */
     public void test_optionalMapping() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> result = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
+                .flatMap(purpleBox -> purpleBox.getSpaceList().stream())
+                .map(colorBoxSpace -> colorBoxSpace.getContent())
+                .filter(content -> content != null && content instanceof List)
+                .flatMap(listContent -> ((List<?>) listContent).stream())
+                .filter(innerContent -> innerContent instanceof YourPrivateRoom.BoxedResort)
+                .map(boxedResort -> ((YourPrivateRoom.BoxedResort) boxedResort).getPark())
+                .filter(boxedPark -> boxedPark.isPresent())
+                .map(boxedPark -> boxedPark.get().getStage())
+                .filter(boxedStage -> boxedStage.isPresent())
+                .map(boxedStage -> Optional.ofNullable(boxedStage.get().getKeyword()).orElse("none"))
+                .collect(Collectors.toList());
+        log(result);
     }
 
     // ===================================================================================
@@ -70,5 +121,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (getColorBoxList()メソッドの中のmakeEighthColorBox()メソッドを呼び出している箇所の行数は？)
      */
     public void test_lineNumber() {
+//        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+//
+//        StackTraceElement[] stackTrace = new Throwable().getStackTrace()
     }
 }
