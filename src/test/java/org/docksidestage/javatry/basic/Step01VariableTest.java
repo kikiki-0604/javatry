@@ -38,6 +38,9 @@ public class Step01VariableTest extends PlainTestCase {
     public void test_variable_basic() {
         String sea = "mystic";
         log(sea); // your answer? => mystic
+
+        //assertで確認していくOKなら次の問題へ
+        assertEquals("mystic",sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -45,9 +48,14 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "mystic";
         Integer land = 8;
         String piari = null;
+        //piariの中身はnullなので表示はされない
+        System.out.println(piari);
         String dstore = "mai";
+        //Integer型のnullは文字列が存在しないことを表現するが、文字列の結合がされているためnullが表示される
         sea = sea + land + piari + ":" + dstore;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mystic8nullmai
+
+        assertEquals("mystic8null:mai",sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -56,7 +64,9 @@ public class Step01VariableTest extends PlainTestCase {
         String land = "oneman";
         sea = land;
         land = land + "'s dreams";
-        log(sea); // your answer? => 
+        log(sea); // your answer? => oneman's dreams
+
+        assertEquals("oneman's dreams",land);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -65,7 +75,9 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         sea = land;
         land++;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 415
+
+        assertEquals(415,sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -75,7 +87,12 @@ public class Step01VariableTest extends PlainTestCase {
         sea = land;
         sea = land.add(new BigDecimal(1));
         sea.add(new BigDecimal(1));
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 416
+        log(land);
+
+        //seaに対して代入をしていないので416。addしても変数自体に代入をしていない
+        //BigDecimal型で比較する
+        assertEquals(new BigDecimal(416),sea);
     }
 
     // ===================================================================================
@@ -89,19 +106,30 @@ public class Step01VariableTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_String() {
         String sea = instanceBroadway;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null
+
+        //フィールド変数でString型に何も代入していないため。
+        assertNull(instanceBroadway);
+        assertEquals(null,sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_int() {
         int sea = instanceDockside;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 0
+
+        //int型の初期値は0
+        assertEquals(0,sea);
+
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_variable_instance_variable_default_Integer() {
         Integer sea = instanceHangar;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => null
+
+        assertNull(sea);
+        assertEquals(null,sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -110,7 +138,10 @@ public class Step01VariableTest extends PlainTestCase {
         instanceMagiclamp = "magician";
         helpInstanceVariableViaMethod(instanceMagiclamp);
         String sea = instanceBroadway + "|" + instanceDockside + "|" + instanceHangar + "|" + instanceMagiclamp;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => bigband|1|null|magician
+
+        //メソッド内で値を代入しているが、instanceMagiclampの代入は引数で渡されたinstanceMagiclampにburnを代入しているため呼び出し元の変数は変わらない。
+        assertEquals("bigband|1|null|magician",sea);
     }
 
     private void helpInstanceVariableViaMethod(String instanceMagiclamp) {
@@ -130,13 +161,18 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
+
+        //concatは結合メソッド
+        assertEquals("harbor",sea);
+
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
         ++land;
         String landStr = String.valueOf(land); // is "416"
         sea.concat(landStr);
+        log(sea);
     }
 
     // -----------------------------------------------------
@@ -147,7 +183,10 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor416
+
+        //new StringBuilder("harbor416")では比較できない。参照先が異なるため。
+        assertEquals("harbor416",sea.toString());
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
@@ -163,7 +202,9 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentVariable(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
+
+        assertEquals("harbor",sea.toString());
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
@@ -191,8 +232,14 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+    private int piari;
     public void test_variable_writing() {
         // define variables here
+
+        String sea = "mystic";
+        Integer land = null;
+
+        log(sea,land,piari);
     }
 
     // ===================================================================================
@@ -204,11 +251,26 @@ public class Step01VariableTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     * 苗字が田中
+     * 名前が太郎
+     * メソッド内で結合して表示する
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_variable_yourExercise() {
         // write your code here
+        String firstName = "tanaka";
+        String lastName = "taro";
+
+        String fullName = joinName(firstName,lastName);
+
+        log(fullName);
+
+        assertEquals("tanaka taro",fullName);
+    }
+
+    private String joinName(String first, String last){
+        String name = first + " " + last;
+        return name;
     }
 }

@@ -18,6 +18,7 @@ package org.docksidestage.javatry.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.ScaleTransition;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -52,7 +53,9 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 7;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
+
+        assertEquals(7, sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -67,7 +70,10 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 9;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 9
+
+        //条件に当てはまったら分岐をぬける
+        assertEquals(7, sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -91,7 +97,9 @@ public class Step02IfForTest extends PlainTestCase {
         if (land) {
             sea = 10;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 10
+
+        assertEquals(10, sea);
     }
 
     // ===================================================================================
@@ -107,7 +115,9 @@ public class Step02IfForTest extends PlainTestCase {
                 sea = stage;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
+
+        assertEquals("dockside", sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -117,7 +127,9 @@ public class Step02IfForTest extends PlainTestCase {
         for (String stage : stageList) {
             sea = stage;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => magiclamp
+
+        assertEquals("magiclamp", sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -133,7 +145,10 @@ public class Step02IfForTest extends PlainTestCase {
                 break;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? =>　hangar
+
+        //startsWith = 指定された文字列で始まるか　真　true　偽　false
+        //contains = 文字列に指定の文字が含まれているか　真　true　偽　false
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -149,7 +164,9 @@ public class Step02IfForTest extends PlainTestCase {
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => dockside
+
+        assertEquals("dockside", sea);
     }
 
     // ===================================================================================
@@ -161,6 +178,16 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_making() {
         // write if-for here
+        List<String> stateList = prepareStageList();
+        List<String> resultList = new ArrayList<>();
+        for (String includeA : stateList) {
+            if (includeA.contains("a")) {
+                resultList.add(includeA);
+            }
+        }
+        log(resultList);
+
+        //TODO:assertでリストの各要素があっているかを確認する方法がある？
     }
 
     // ===================================================================================
@@ -173,17 +200,38 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
         String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        }
+        //
+        //        log(sea); // should be same as before-fix
+
+        try {
+            for (String stage : stageList) {
+                if (stage.startsWith("br")) {
+                    continue;
+                }
+                sea = stage;
+                if (stage.contains("ga")) {
+                    throw new RuntimeException();
+                }
             }
-            sea = stage;
-            if (stage.contains("ga")) {
-                break;
-            }
+        } catch (RuntimeException e) {
         }
+
         log(sea); // should be same as before-fix
+
     }
+
+    //forEachではcontineは使えない。エラーになる
+    //breakは例外処理を利用する方法がある。コードが複雑になるので推奨されないっぽい
+    //TODO：レビューしてもらう
 
     /**
      * Make your original exercise as question style about if-for statement. <br>
@@ -191,12 +239,33 @@ public class Step02IfForTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     * ①if文とfor文を使って9×9を表示させる
+     * ②リストから「way」を含む要素と「ma」から始まる要素だけを表示する
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
         // write your code here
+        for (int i = 1; i <= 9; i++) {
+            for (int j = 1; j <= 9; j++) {
+                System.out.print(i * j + " ");
+                if (j == 9) {
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public void test2_iffor_yourExercise() {
+        List<String> stageList = prepareStageList();
+        List<String> resultList = new ArrayList<>();
+        stageList.forEach(stage ->{
+            if(stage.endsWith("way") || stage.startsWith("ma")){
+                resultList.add(stage);
+            }
+        });
+        log(resultList);
     }
 
     // ===================================================================================
