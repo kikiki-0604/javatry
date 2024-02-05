@@ -170,7 +170,7 @@ public class YourPrivateRoom {
         }
         {
             Map<String, Object> lowerMap = new LinkedHashMap<String, Object>();
-            lowerMap.put("Small Coin Lockerf", 300); // these are when 2019/04/15
+            lowerMap.put("Small Coina Lockdsaer2", 300); // these are when 2019/04/15
             lowerMap.put("Resort Line", 250);
             lowerMap.put("Cinema Piari", "1800"); // trap
             lowerMap.put("Middle Coin Locker", "4O0"); // more trap
@@ -183,15 +183,14 @@ public class YourPrivateRoom {
         StandardColorBox colorBox = new StandardColorBox(new BoxColor("yellow"), new BoxSize(30, 50, 40));
         Set<String> set = new HashSet<String>();
         set.add("2019/04/22");
-        set.add("2O20/04/22"); // Hyper trap
+        set.add("2O19/04/22"); // super trap
         colorBox.getUpperSpace().setContent(set);
         colorBox.getMiddleSpace().setContent(new BittersweetMemorableException("nullsidestage", doyoulikeNullPointer()));
         colorBox.getLowerSpace().setContent((FavoriteProvider) () -> "mystic");
         return colorBox;
     }
 
-    private NullPointerException
-    doyoulikeNullPointer() {
+    private NullPointerException doyoulikeNullPointer() {
         return new NullPointerException("Oh, yes");
     }
 
@@ -362,8 +361,8 @@ public class YourPrivateRoom {
     //                                                                           =========
     public static class BoxedResort {
 
-        private final String region;
-        private BoxedPark park;
+        private final String region; // not null
+        private BoxedPark park; // null allowed
 
         public BoxedResort(String region, BoxedPark park) {
             this.region = region;
@@ -386,8 +385,8 @@ public class YourPrivateRoom {
 
     public static class BoxedPark {
 
-        private final String theme;
-        private BoxedStage stage;
+        private final String theme; // not null
+        private BoxedStage stage; // null allowed
 
         public BoxedPark(String theme, BoxedStage stage) {
             this.theme = theme;
@@ -410,8 +409,8 @@ public class YourPrivateRoom {
 
     public static class BoxedStage {
 
-        private final String showName;
-        private String keyword;
+        private final String showName; // not null
+        private String keyword; // null allowed
 
         public BoxedStage(String showName, String keyword) {
             this.showName = showName;
