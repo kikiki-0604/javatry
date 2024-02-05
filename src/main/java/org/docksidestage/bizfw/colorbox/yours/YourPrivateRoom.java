@@ -170,7 +170,7 @@ public class YourPrivateRoom {
         }
         {
             Map<String, Object> lowerMap = new LinkedHashMap<String, Object>();
-            lowerMap.put("Small Coin Locker", 300); // these are when 2019/04/15
+            lowerMap.put("Small Coin Locker4", 300); // these are when 2019/04/15
             lowerMap.put("Resort Line", 250);
             lowerMap.put("Cinema Piari", "1800"); // trap
             lowerMap.put("Middle Coin Locker", "4O0"); // more trap
